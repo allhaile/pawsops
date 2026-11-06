@@ -23,7 +23,7 @@ Clicking **Add to Slack** for an agent runs these calls with the manager app's t
 
 Lifecycle: `apps.manifest.update` (rename), `apps.manifest.delete`, and a `managed_app_deleted` event handler.
 
-> `apps.managedInstall` and `managed_app_deleted` are not publicly documented yet. Their payloads are isolated in `src/slack/managedApps.ts` and marked `UNVERIFIED`.
+> `apps.managedInstall` and `managed_app_deleted` are not publicly documented yet. `apps.managedInstall` was confirmed against a flagged sandbox: it takes `app_id` and returns the child app's tokens under `api_access_tokens` (`bot_access_token`, `app_level_token`), so child apps can run over Socket Mode. The `managed_app_deleted` payload is still a guess, marked `UNVERIFIED` in `src/manager/managerApp.ts`.
 
 ## Modes
 

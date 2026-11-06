@@ -63,7 +63,7 @@ export async function deployAgent(key: AgentKey, emit: Emit) {
 	} else {
 		const created = await slack.createApp(childManifest(agent), premade.appId, callOptions('user', onCall));
 		record = {
-			...(config.mockMode ? premade : { botToken: '', appToken: created.appToken, signingSecret: created.signingSecret }),
+			...(config.mockMode ? premade : { botToken: '', appToken: '', signingSecret: created.signingSecret }),
 			key,
 			appId: created.appId,
 			name: agent.name,
@@ -81,7 +81,7 @@ export async function deployAgent(key: AgentKey, emit: Emit) {
 	store.putAgent({
 		...record,
 		stage: 'installed',
-		botToken: config.mockMode ? record.botToken : installed.botToken,
+		...(!config.mockMode && { botToken: installed.botToken, appToken: installed.appToken }),
 	});
 
 	const connected = await connect(key, emit);
