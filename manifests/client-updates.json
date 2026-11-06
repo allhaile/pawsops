@@ -2,7 +2,7 @@
 	"display_information": {
 		"name": "Client Updates",
 		"description": "Drafts photo updates for dog owners. Staff approve before anything is sent.",
-		"long_description": "Mention me with a photo and say \"send Max's owner an update\". I draft the email, you approve it, then I send it. Built and deployed with PawsOps for Paws & Stay.",
+		"long_description": "Mention me with a photo and say \"send Max's owner an update\". I draft the email, you approve it, then I send it.\n\nDrafts photo updates for dog owners. Staff approve before anything is sent.\n\nThis agent was built on PawsOps and deployed to Slack as its own app for Paws & Stay, a dog boarding business with three locations. All data in this demo is sample data.",
 		"background_color": "#2E86AB"
 	},
 	"features": {

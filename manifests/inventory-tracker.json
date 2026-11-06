@@ -2,7 +2,7 @@
 	"display_information": {
 		"name": "Inventory Tracker",
 		"description": "Answers stock questions per location and alerts on low supplies.",
-		"long_description": "Ask me \"how much kibble is left at Location 2?\" I also post low-stock alerts with a Reorder button. Built and deployed with PawsOps for Paws & Stay.",
+		"long_description": "Ask me \"how much kibble is left at Location 2?\" I also post low-stock alerts with a Reorder button.\n\nAnswers stock questions per location and alerts on low supplies.\n\nThis agent was built on PawsOps and deployed to Slack as its own app for Paws & Stay, a dog boarding business with three locations. All data in this demo is sample data.",
 		"background_color": "#27AE60"
 	},
 	"features": {

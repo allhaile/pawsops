@@ -23,6 +23,15 @@ function settings(transport: Transport, path: string, botEvents: string[]) {
 	};
 }
 
+// Slack requires long_description to be 175 to 4000 characters.
+function longDescription(agent: AgentDef) {
+	return [
+		agent.longDescription,
+		agent.description,
+		'This agent was built on PawsOps and deployed to Slack as its own app for Paws & Stay, a dog boarding business with three locations. All data in this demo is sample data.',
+	].join('\n\n');
+}
+
 /**
  * Manifest for one agent's dedicated Slack app.
  * In HTTP transport the request URL is keyed by agent so the router can find the right signing secret.
@@ -33,7 +42,7 @@ export function childManifest(agent: AgentDef, name = agent.name, transport = co
 		display_information: {
 			name,
 			description: agent.description,
-			long_description: `${agent.longDescription} Built and deployed with PawsOps for Paws & Stay.`,
+			long_description: longDescription(agent),
 			background_color: agent.color,
 		},
 		features: {
