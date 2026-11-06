@@ -18,20 +18,11 @@
 	"oauth_config": {
 		"scopes": {
 			"bot": [
-				"app_configurations:read",
-				"app_configurations:write",
 				"chat:write"
-			],
-			"user": [
-				"app_configurations:read",
-				"app_configurations:write"
 			]
 		}
 	},
 	"settings": {
-		"event_subscriptions": {
-			"bot_events": []
-		},
 		"interactivity": {
 			"is_enabled": true
 		},

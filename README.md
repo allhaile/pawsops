@@ -45,8 +45,8 @@ npm run dev            # dashboard at http://localhost:3000
 ### 1. Create the PawsOps manager app (optional in mock mode)
 
 1. Go to https://api.slack.com/apps → **Create New App** → **From a manifest** → pick your sandbox workspace.
-2. Paste `manifests/pawsops-manager.json`. If the workspace is not feature-flagged and validation fails on `managed_apps:install` or `managed_app_deleted`, use `manifests/pawsops-manager.unflagged.json` instead.
-3. **Install to Workspace**. Copy the Bot token (`xoxb-`) and User token (`xoxp-`) into `MANAGER_BOT_TOKEN` and `MANAGER_USER_TOKEN`.
+2. Paste `manifests/pawsops-manager.unflagged.json`. Use `manifests/pawsops-manager.json` only once Slack Partnerships has enabled manager-app support: before that, its `app_configurations:*` and `managed_apps:install` bot and user scopes are rejected as illegal (those scopes are otherwise configuration-token-only).
+3. **Install to Workspace**. Copy the Bot token (`xoxb-`) into `MANAGER_BOT_TOKEN`. The User token (`xoxp-`) only exists with the flagged manifest; it goes in `MANAGER_USER_TOKEN`.
 4. **Basic Information → App-Level Tokens → Generate**, scope `connections:write`. Copy the `xapp-` token into `MANAGER_APP_TOKEN`.
 
 ### 2. Create the 3 agent apps (mock mode)
