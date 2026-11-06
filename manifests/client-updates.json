@@ -1,0 +1,44 @@
+{
+	"display_information": {
+		"name": "Client Updates",
+		"description": "Drafts photo updates for dog owners. Staff approve before anything is sent.",
+		"long_description": "Mention me with a photo and say \"send Max's owner an update\". I draft the email, you approve it, then I send it. Built and deployed with PawsOps for Paws & Stay.",
+		"background_color": "#2E86AB"
+	},
+	"features": {
+		"app_home": {
+			"home_tab_enabled": false,
+			"messages_tab_enabled": true,
+			"messages_tab_read_only_enabled": false
+		},
+		"bot_user": {
+			"display_name": "Client Updates",
+			"always_online": true
+		}
+	},
+	"oauth_config": {
+		"scopes": {
+			"bot": [
+				"app_mentions:read",
+				"chat:write",
+				"files:read",
+				"im:history",
+				"users:read"
+			]
+		}
+	},
+	"settings": {
+		"event_subscriptions": {
+			"bot_events": [
+				"app_mention",
+				"message.im"
+			]
+		},
+		"interactivity": {
+			"is_enabled": true
+		},
+		"socket_mode_enabled": true,
+		"org_deploy_enabled": false,
+		"token_rotation_enabled": false
+	}
+}

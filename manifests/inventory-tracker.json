@@ -1,0 +1,51 @@
+{
+	"display_information": {
+		"name": "Inventory Tracker",
+		"description": "Answers stock questions per location and alerts on low supplies.",
+		"long_description": "Ask me \"how much kibble is left at Location 2?\" I also post low-stock alerts with a Reorder button. Built and deployed with PawsOps for Paws & Stay.",
+		"background_color": "#27AE60"
+	},
+	"features": {
+		"app_home": {
+			"home_tab_enabled": false,
+			"messages_tab_enabled": true,
+			"messages_tab_read_only_enabled": false
+		},
+		"bot_user": {
+			"display_name": "Inventory Tracker",
+			"always_online": true
+		},
+		"slash_commands": [
+			{
+				"command": "/stock-check",
+				"description": "Check inventory levels",
+				"usage_hint": "[location]",
+				"should_escape": false
+			}
+		]
+	},
+	"oauth_config": {
+		"scopes": {
+			"bot": [
+				"app_mentions:read",
+				"chat:write",
+				"commands",
+				"im:history"
+			]
+		}
+	},
+	"settings": {
+		"event_subscriptions": {
+			"bot_events": [
+				"app_mention",
+				"message.im"
+			]
+		},
+		"interactivity": {
+			"is_enabled": true
+		},
+		"socket_mode_enabled": true,
+		"org_deploy_enabled": false,
+		"token_rotation_enabled": false
+	}
+}

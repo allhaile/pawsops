@@ -1,1 +1,50 @@
-<!doctype html><title>PawsOps</title><h1>PawsOps</h1><p>Agent dashboard coming in Phase 2.</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>PawsOps · Agents</title>
+		<link rel="icon" href="/icons/pawsops-manager.png" />
+		<link rel="stylesheet" href="/styles.css" />
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="brand">
+				<img src="/icons/pawsops-manager.png" alt="" width="32" height="32" />
+				<span>PawsOps</span>
+			</div>
+			<div class="org">Paws &amp; Stay · 3 locations</div>
+			<div class="badges" id="badges"></div>
+		</header>
+
+		<main class="layout">
+			<section>
+				<h1>Your agents</h1>
+				<p class="lede">Deploy each agent to Slack as its own app. One click, no extra OAuth.</p>
+				<div class="agents" id="agents"></div>
+			</section>
+
+			<aside class="activity">
+				<div class="activity__header">
+					<h2>Slack API activity</h2>
+					<button class="link" id="reset" type="button">Reset demo</button>
+				</div>
+				<ol class="log" id="log"></ol>
+			</aside>
+		</main>
+
+		<template id="agent-card">
+			<article class="card">
+				<img class="card__icon" alt="" width="56" height="56" />
+				<div class="card__body">
+					<h3 class="card__name"></h3>
+					<p class="card__desc"></p>
+					<div class="card__meta"></div>
+				</div>
+				<div class="card__actions"></div>
+			</article>
+		</template>
+
+		<script type="module" src="/app.js"></script>
+	</body>
+</html>
