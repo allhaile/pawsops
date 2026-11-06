@@ -42,33 +42,46 @@ function callOptions(kind: 'user' | 'bot' | 'config-capable', onCall: slack.Call
 	return { token, simulate: false, onCall };
 }
 
+/**
+ * Saves the agent right after apps.manifest.create, so a failed later step can be retried
+ * without creating a second app.
+ */
 export async function deployAgent(key: AgentKey, emit: Emit) {
 	const agent = catalog[key];
-	if (store.getAgent(key)) {
-		throw new Error(`${agent.name} is already deployed.`);
-	}
 	const premade = config.premade[key];
 	if (config.mockMode && !premade.appId) {
 		throw new Error(`Mock mode needs the pre-made ${agent.name} app. Fill in its values in .env.`);
 	}
 	const onCall = recorder(key, emit);
 
-	const created = await slack.createApp(childManifest(agent), premade.appId, callOptions('user', onCall));
-	await slack.setIcon(created.appId, iconPath(key), callOptions('config-capable', onCall));
-	await slack.setPermissions(created.appId, agent.permissions, callOptions('bot', onCall));
-	const installed = await slack.managedInstall(created.appId, callOptions('user', onCall));
+	let record = store.getAgent(key);
+	if (record?.stage === 'installed') {
+		throw new Error(`${agent.name} is already deployed.`);
+	}
+	if (record) {
+		emit({ type: 'local', title: 'Resuming deploy', detail: `${record.appId} already exists`, ok: true });
+	} else {
+		const created = await slack.createApp(childManifest(agent), premade.appId, callOptions('user', onCall));
+		record = {
+			...(config.mockMode ? premade : { botToken: '', appToken: created.appToken, signingSecret: created.signingSecret }),
+			key,
+			appId: created.appId,
+			name: agent.name,
+			stage: 'created',
+			simulated: config.mockMode,
+			deployedAt: new Date().toISOString(),
+		};
+		store.putAgent(record);
+	}
 
-	const creds = config.mockMode
-		? premade
-		: { botToken: installed.botToken, appToken: created.appToken, signingSecret: created.signingSecret };
+	await slack.setIcon(record.appId, iconPath(key), callOptions('config-capable', onCall));
+	await slack.setPermissions(record.appId, agent.permissions, callOptions('bot', onCall));
+	const installed = await slack.managedInstall(record.appId, callOptions('user', onCall));
 
 	store.putAgent({
-		key,
-		appId: created.appId,
-		name: agent.name,
-		...creds,
-		simulated: config.mockMode,
-		deployedAt: new Date().toISOString(),
+		...record,
+		stage: 'installed',
+		botToken: config.mockMode ? record.botToken : installed.botToken,
 	});
 
 	const connected = await connect(key, emit);
@@ -139,7 +152,7 @@ export async function handleManagedAppDeleted(appId: string, emit: Emit = () => 
 
 /** Reconnects agents that were deployed before a restart. */
 export async function restoreAgents() {
-	for (const record of store.listAgents()) {
+	for (const record of store.listAgents().filter((agent) => agent.stage === 'installed')) {
 		await connect(record.key, ({ type, ...step }) => console.log(`[restore] ${type}`, step));
 	}
 }

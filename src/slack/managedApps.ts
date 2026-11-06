@@ -99,7 +99,8 @@ export async function createApp(manifest: Record<string, unknown>, simulatedAppI
 }
 
 export async function setIcon(appId: string, iconPath: string, opts: CallOptions) {
-	const file = opts.simulate ? undefined : fs.createReadStream(iconPath);
+	// The SDK only sends multipart/form-data for Buffer values, not streams.
+	const file = opts.simulate ? undefined : fs.readFileSync(iconPath);
 	await call('apps.icon.set', { app_id: appId, file }, { app_id: appId, file: path.basename(iconPath) }, {}, opts);
 }
 

@@ -9,6 +9,8 @@ export interface AgentRecord {
 	key: AgentKey;
 	appId: string;
 	name: string;
+	/** created: apps.manifest.create succeeded but a later deploy step did not. */
+	stage: 'created' | 'installed';
 	botToken: string;
 	appToken: string;
 	signingSecret: string;

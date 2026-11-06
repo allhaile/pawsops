@@ -35,7 +35,8 @@ routes.get('/state', (_req, res) => {
 			const record = store.getAgent(key);
 			return {
 				...catalog[key],
-				deployed: Boolean(record),
+				deployed: record?.stage === 'installed',
+				partial: record?.stage === 'created',
 				connected: runtime.isRunning(key),
 				appId: record?.appId,
 				deployedName: record?.name,

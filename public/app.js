@@ -48,12 +48,19 @@ function renderAgents(state) {
 			if (agent.deployed) {
 				meta.append(badge(agent.connected ? 'In Slack' : 'Installed, not connected', agent.connected ? 'ok' : 'warn'));
 				meta.append(badge(agent.appId, 'mono'));
+			} else if (agent.partial) {
+				meta.append(badge('Deploy incomplete', 'warn'), badge(agent.appId, 'mono'));
 			} else if (state.mockMode && !agent.premadeReady) {
 				meta.append(badge('Pre-made app missing in .env', 'warn'));
 			}
 
 			const actions = card.querySelector('.card__actions');
-			if (agent.deployed) {
+			if (agent.partial) {
+				actions.append(
+					button('Resume deploy', 'slack', () => run(`/api/agents/${agent.key}/deploy`)),
+					button('Delete', 'danger', () => remove(agent)),
+				);
+			} else if (agent.deployed) {
 				actions.append(
 					button('Rename', 'secondary', () => rename(agent)),
 					button('Delete', 'danger', () => remove(agent)),
