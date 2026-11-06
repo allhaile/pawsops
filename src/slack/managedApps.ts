@@ -9,7 +9,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { WebClient } from '@slack/web-api';
+import { webApi } from '@slack/bolt';
 import type { Permissions } from '../agents/catalog.js';
 
 export interface CallResult {
@@ -53,7 +53,7 @@ async function call(
 		response = { ok: false, error: 'not_authed', detail: 'No token configured for this call. Check .env.' };
 	} else {
 		try {
-			response = (await new WebClient(token).apiCall(method, args)) as unknown as Record<string, unknown>;
+			response = (await new webApi.WebClient(token).apiCall(method, args)) as unknown as Record<string, unknown>;
 		} catch (error) {
 			const data = (error as { data?: Record<string, unknown> }).data;
 			response = data ?? { ok: false, error: (error as Error).message };
@@ -106,7 +106,7 @@ export async function createApp(manifest: Record<string, unknown>, simulatedAppI
 }
 
 export async function setIcon(appId: string, iconPath: string, opts: CallOptions) {
-	// The SDK only sends multipart/form-data for Buffer values, not streams.
+	// Send a Buffer: it is reliably encoded as multipart/form-data by every web-api version.
 	const file = opts.simulate ? undefined : fs.readFileSync(iconPath);
 	await call('apps.icon.set', { app_id: appId, file }, { app_id: appId, file: path.basename(iconPath) }, {}, opts);
 }

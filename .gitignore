@@ -4,3 +4,4 @@ dist/
 data/store.json
 data/outbox.log
 .DS_Store
+data/drafts.json

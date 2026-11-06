@@ -1,0 +1,113 @@
+{
+	"_note": "Sample data only. Every dog, owner and email address here is fictional.",
+	"dogs": [
+		{
+			"name": "Max",
+			"breed": "Golden Retriever",
+			"location": "Location 1 · Riverside",
+			"owner": {
+				"name": "Sarah Chen",
+				"email": "sarah.chen@example.com"
+			},
+			"checkOut": "Sunday",
+			"today": {
+				"activities": [
+					"splashed around the pool",
+					"played fetch for most of the afternoon"
+				],
+				"meals": "He ate all of his breakfast and dinner.",
+				"notes": "He's made fast friends with a lab named Biscuit."
+			}
+		},
+		{
+			"name": "Bella",
+			"breed": "French Bulldog",
+			"location": "Location 2 · Midtown",
+			"owner": {
+				"name": "Marcus Johnson",
+				"email": "marcus.j@example.com"
+			},
+			"checkOut": "Friday",
+			"today": {
+				"activities": [
+					"took two short walks",
+					"napped in the sun room"
+				],
+				"meals": "She finished her dinner and had her evening treat.",
+				"notes": "She's been very cuddly with the staff."
+			}
+		},
+		{
+			"name": "Luna",
+			"breed": "Siberian Husky",
+			"location": "Location 3 · Northgate",
+			"owner": {
+				"name": "Priya Patel",
+				"email": "priya.patel@example.com"
+			},
+			"checkOut": "Monday",
+			"today": {
+				"activities": [
+					"ran laps in the big yard",
+					"joined the afternoon group play"
+				],
+				"meals": "She ate well at both meals.",
+				"notes": "She tried to howl along with the radio."
+			}
+		},
+		{
+			"name": "Charlie",
+			"breed": "Beagle",
+			"location": "Location 1 · Riverside",
+			"owner": {
+				"name": "Diego Ramirez",
+				"email": "diego.r@example.com"
+			},
+			"checkOut": "Saturday",
+			"today": {
+				"activities": [
+					"went on a sniff walk",
+					"worked on a puzzle feeder"
+				],
+				"meals": "He cleaned his bowl at breakfast and dinner.",
+				"notes": "He found every treat we hid in the yard."
+			}
+		},
+		{
+			"name": "Daisy",
+			"breed": "Cavalier King Charles Spaniel",
+			"location": "Location 2 · Midtown",
+			"owner": {
+				"name": "Emma Wilson",
+				"email": "emma.wilson@example.com"
+			},
+			"checkOut": "Thursday",
+			"today": {
+				"activities": [
+					"had a brushing session",
+					"played with the small-dog group"
+				],
+				"meals": "She ate most of her breakfast and all of her dinner.",
+				"notes": "She's settling in nicely and sleeping well."
+			}
+		},
+		{
+			"name": "Mochi",
+			"breed": "Shiba Inu",
+			"location": "Location 3 · Northgate",
+			"owner": {
+				"name": "Kenji Tanaka",
+				"email": "kenji.t@example.com"
+			},
+			"checkOut": "Wednesday",
+			"today": {
+				"activities": [
+					"explored the agility course",
+					"took a long evening walk"
+				],
+				"meals": "He ate his breakfast and dinner at his own pace.",
+				"notes": "He's very proud of himself after the agility course."
+			}
+		}
+	]
+}
