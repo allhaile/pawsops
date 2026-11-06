@@ -5,6 +5,9 @@ import * as runtime from '../slack/runtime.js';
 import * as store from '../store/store.js';
 import { deleteAgent, deployAgent, renameAgent, type Emit } from './deploy.js';
 import { managerConnected } from './managerApp.js';
+import { MAX_AGENT_NAME, slackAppName } from '../manifests.js';
+
+const APP_PREFIX_LENGTH = slackAppName('').length;
 
 export const routes = express.Router();
 routes.use(express.json());
@@ -40,6 +43,7 @@ routes.get('/state', (_req, res) => {
 				connected: runtime.isRunning(key),
 				appId: record?.appId,
 				deployedName: record?.name,
+				slackName: slackAppName(record?.name ?? catalog[key].name),
 				premadeReady: Boolean(config.premade[key].appId),
 			};
 		}),
@@ -58,12 +62,18 @@ routes.post('/agents/:key/deploy', (req, res) => {
 
 routes.post('/agents/:key/rename', (req, res) => {
 	const key = agentKey(req.params.key);
-	const name = String(req.body?.name ?? '').trim();
-	if (!key || !name) {
-		res.status(400).json({ error: 'agent key and name are required' });
+	if (!key) {
+		res.sendStatus(404);
 		return;
 	}
-	void stream(res, (emit) => renameAgent(key, name, emit));
+	// Users may type the name with or without the PawsOps prefix; store it without.
+	const name = slackAppName(String(req.body?.name ?? '').trim()).slice(APP_PREFIX_LENGTH);
+	void stream(res, async (emit) => {
+		if (!name || name.length > MAX_AGENT_NAME) {
+			throw new Error(`Name must be 1 to ${MAX_AGENT_NAME} characters.`);
+		}
+		await renameAgent(key, name, emit);
+	});
 });
 
 routes.post('/agents/:key/delete', (req, res) => {

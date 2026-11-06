@@ -1,6 +1,6 @@
 {
 	"display_information": {
-		"name": "Overtime Approver",
+		"name": "PawsOps Overtime Approver",
 		"description": "Flags employees past 40 hours and asks a manager to approve or deny overtime.",
 		"long_description": "I check ADP hours and post an approval card in #managers when someone passes 40 hours.\n\nFlags employees past 40 hours and asks a manager to approve or deny overtime.\n\nThis agent was built on PawsOps and deployed to Slack as its own app for Paws & Stay, a dog boarding business with three locations. All data in this demo is sample data.",
 		"background_color": "#C0392B"
@@ -12,7 +12,7 @@
 			"messages_tab_read_only_enabled": false
 		},
 		"bot_user": {
-			"display_name": "Overtime Approver",
+			"display_name": "PawsOps Overtime Approver",
 			"always_online": true
 		},
 		"slash_commands": [

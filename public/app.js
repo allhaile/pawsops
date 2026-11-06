@@ -41,10 +41,12 @@ function renderAgents(state) {
 			const card = template.content.cloneNode(true);
 			card.querySelector('.card__icon').src = `/icons/${agent.key}.png`;
 			card.querySelector('.card__name').textContent = agent.deployedName ?? agent.name;
+			card.querySelector('.card__name').title = `Slack app: ${agent.slackName}`;
 			card.querySelector('.card__desc').textContent = agent.description;
 
 			const meta = card.querySelector('.card__meta');
 			meta.append(badge(agent.permissions === 'app_owner' ? 'Restricted: app owner only' : 'Everyone'));
+			meta.append(badge(`Slack name: ${agent.slackName}`));
 			if (agent.deployed) {
 				meta.append(badge(agent.connected ? 'In Slack' : 'Installed, not connected', agent.connected ? 'ok' : 'warn'));
 				meta.append(badge(agent.appId, 'mono'));
@@ -145,7 +147,7 @@ async function run(url, body) {
 }
 
 function rename(agent) {
-	const name = prompt('New agent name', agent.deployedName ?? agent.name);
+	const name = prompt('New agent name (Slack shows it as “PawsOps <name>”)', agent.deployedName ?? agent.name);
 	if (name?.trim()) run(`/api/agents/${agent.key}/rename`, { name: name.trim() });
 }
 

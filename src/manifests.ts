@@ -23,6 +23,16 @@ function settings(transport: Transport, path: string, botEvents: string[]) {
 	};
 }
 
+export const APP_NAME_PREFIX = 'PawsOps';
+// Slack app names are capped at 35 characters.
+export const MAX_AGENT_NAME = 35 - APP_NAME_PREFIX.length - 1;
+
+/** Every app PawsOps creates is named "PawsOps <agent name>" so it is easy to spot in Slack. */
+export function slackAppName(name: string) {
+	const bare = name.replace(new RegExp(`^${APP_NAME_PREFIX}\\s+`, 'i'), '');
+	return `${APP_NAME_PREFIX} ${bare}`;
+}
+
 // Slack requires long_description to be 175 to 4000 characters.
 function longDescription(agent: AgentDef) {
 	return [
@@ -37,17 +47,18 @@ function longDescription(agent: AgentDef) {
  * In HTTP transport the request URL is keyed by agent so the router can find the right signing secret.
  */
 export function childManifest(agent: AgentDef, name = agent.name, transport = config.transport): Manifest {
+	const appName = slackAppName(name);
 	const requestUrl = `${config.publicUrl}/slack/events/${agent.key}`;
 	return {
 		display_information: {
-			name,
+			name: appName,
 			description: agent.description,
 			long_description: longDescription(agent),
 			background_color: agent.color,
 		},
 		features: {
 			app_home: { home_tab_enabled: false, messages_tab_enabled: true, messages_tab_read_only_enabled: false },
-			bot_user: { display_name: name, always_online: true },
+			bot_user: { display_name: appName, always_online: true },
 			...(agent.slashCommands.length && {
 				slash_commands: agent.slashCommands.map((cmd) => ({
 					...cmd,
